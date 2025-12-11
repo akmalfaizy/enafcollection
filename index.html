@@ -3,16 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./src/img/icon.svg" />
+    <link rel="icon" href="./src/img/favicon_enaf.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <!-- AOS for scroll animation -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+    <!-- SwiperJS (versi 11, terbaru dan stabil) -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <!-- Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
     />
     <title>Enaf Collection — Official Store</title>
     <meta
@@ -40,6 +45,10 @@
                 800: "#3b332f",
                 900: "#211c1a",
               },
+            },
+            fontFamily: {
+              sans: ["Poppins", "ui-sans-serif", "system-ui"],
+              arabic: ['"Scheherazade New"', "serif"],
             },
             dropShadow: {
               glow: "0 10px 20px rgba(127,111,102,0.35)",
@@ -72,6 +81,93 @@
       };
     </script>
     <style>
+      /* Style Kustom untuk Carousel dan Responsive Layout */
+
+      /* PENTING: Memastikan item flex (card) meregang ke tinggi maksimum dan scroll halus */
+      .carousel-container {
+        scroll-behavior: smooth;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+        align-items: stretch; /* Memastikan semua card memiliki tinggi yang sama */
+      }
+      /* Hide scrollbar for Chrome, Safari and Opera */
+      .carousel-container::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* Mengatur tampilan item slide */
+      .product-slide-item {
+        /* Default: Mobile (1 item per view) */
+        flex: 0 0 calc(100% - 1.5rem); /* 100% lebar container dikurangi margin */
+        margin-right: 1.5rem; /* gap-6 adalah 1.5rem */
+      }
+
+      /* Desktop (lg: 3 item per view) */
+      @media (min-width: 1024px) {
+        .product-slide-item {
+          flex: 0 0 calc(33.333333% - 1.5rem); /* 1/3 lebar container dikurangi margin untuk gap */
+          margin-right: 1.5rem;
+        }
+        /* Menghilangkan margin kanan pada item terakhir saat desktop */
+        .product-slide-item:last-child {
+          margin-right: 0;
+        }
+      }
+
+      /* Style untuk tombol navigasi */
+      .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        padding: 0.5rem;
+        background-color: white;
+        border-radius: 9999px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      .carousel-button:hover {
+        background-color: #f3f4f6;
+      }
+
+      .btn-shopee {
+        background-color: #ff5a00;
+        color: white;
+        border: 2px solid #ff5a00;
+        border-radius: 50px; /* <-- tambah rounding */
+        padding: 8px 20px; /* biar proporsional */
+        transition: 0.3s ease;
+      }
+
+      .btn-shopee img {
+        filter: brightness(0) invert(1);
+        transition: 0.3s ease;
+      }
+
+      .btn-shopee:hover {
+        background-color: white;
+        color: #ff5a00;
+      }
+
+      .btn-shopee:hover img {
+        filter: none;
+      }
+
+      .category-hero-polos,
+      .category-hero-printing {
+        /* Dummy background image, ganti dengan path sebenarnya */
+        background-image: url("https://via.placeholder.com/1200x300/FEE2E2/EF4444?text=Banner+Hijab");
+        background-size: cover;
+        background-position: center;
+      }
+      .product-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
       @keyframes floaty {
         0%,
         100% {
@@ -163,6 +259,157 @@
       .swiper-button-next::after {
         font-size: 24px !important;
       }
+
+      .hero-overlay {
+        background: linear-gradient(
+          180deg,
+          rgba(14, 11, 10, 0.28) 0%,
+          rgba(14, 11, 10, 0.18) 40%,
+          rgba(255, 255, 255, 0) 100%
+        );
+      }
+      /* .category-hero {
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        min-height: 76vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+      .category-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(110, 93, 93, 0.18),
+          rgba(248, 246, 245, 0.02)
+        );
+        pointer-events: none;
+      } */
+
+      /* make Swiper product cards look elevated */
+      .product-card {
+        transition: transform 0.28s ease, box-shadow 0.28s ease;
+      }
+      .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(16, 24, 40, 0.08);
+      }
+
+      /* full-bleed section spacing */
+      .section-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      /* responsive tweaks */
+      /* @media (min-width: 1024px) {
+        .category-hero {
+          min-height: 88vh;
+        }
+      } */
+
+      /* small shimmer for CTA */
+      .shimmer {
+        position: relative;
+        overflow: hidden;
+      }
+      .shimmer::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -30%;
+        width: 40%;
+        height: 200%;
+        background: linear-gradient(
+          120deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.6) 50%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        transform: rotate(25deg);
+        transition: transform 0.7s ease;
+      }
+      .shimmer:hover::after {
+        transform: translateX(220%) rotate(25deg);
+      }
+      /* --- Pengaturan Responsive Hero --- */
+      .category-hero {
+        /* Layout & Ukuran */
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        /* Background Dasar */
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        /* 1. Pengaturan MOBILE (Default: max-width 767px) */
+        min-height: 60vh; /* Tinggi adaptif */
+        background-position: center top;
+        background-image: url("./src/img/banner_mobile_hijab_polos.png");
+      }
+
+      /* responsive tweaks */
+      @media (min-width: 768px) {
+        /* 2. Pengaturan DESKTOP (diaktifkan pada layar >= 768px) */
+        .category-hero {
+          min-height: 75vh;
+          background-position: center center;
+          /* TIMPA dengan GAMBAR DESKTOP/WEB */
+          background-image: url("./src/img/banner_web_hijab_polos.png");
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .category-hero {
+          min-height: 88vh;
+        }
+      }
+
+      /* Category Hero Printing */
+      /* --- Pengaturan Responsive Hero --- */
+      .category-hero-printing {
+        /* Layout & Ukuran */
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+
+        /* Background Dasar */
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        /* 1. Pengaturan MOBILE (Default: max-width 767px) */
+        min-height: 60vh; /* Tinggi adaptif */
+        background-position: center top;
+        background-image: url("./src/img/banner_mobile_hijab_printing.png");
+      }
+
+      /* responsive tweaks */
+      @media (min-width: 768px) {
+        /* 2. Pengaturan DESKTOP (diaktifkan pada layar >= 768px) */
+        .category-hero-printing {
+          min-height: 75vh;
+          background-position: center center;
+          /* TIMPA dengan GAMBAR DESKTOP/WEB */
+          background-image: url("./src/img/banner_web_hijab_printing.png");
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .category-hero-printing {
+          min-height: 88vh;
+        }
+      }
     </style>
   </head>
   <body class="bg-aurora text-brand-900 overflow-x-hidden">
@@ -194,7 +441,11 @@
             <div
               class="place-content-center transition-all group-hover:drop-shadow-glow"
             >
-              <img src="./src/img/icon.svg" alt="Icon Enaf" class="h-8 w-8" />
+              <img
+                src="./src/img/icon_enaf.svg"
+                alt="Icon Enaf"
+                class="h-8 w-8"
+              />
             </div>
             <div class="leading-tight">
               <p class="font-semibold -mb-0.5 tracking-wide">
@@ -302,13 +553,12 @@
               <p
                 class="inline-flex items-center gap-2 font-medium text-brand-700"
               >
-                <span>✨</span> GRAND OPENING — Diskon Spesial & Free Ongkir
-                Seluruh Pulau Jawa* Minimal Pembelian 100K
+                <span>✨</span> Koleksi baru sudah hadir! Cek sekarang
               </p>
               <p
                 class="inline-flex items-center gap-2 font-medium text-brand-700"
               >
-                <span>🚚</span> SIAP KIRIM LANGSUNG SETELAH CHECKOUT
+                <span>🚚</span> Siap Kirim Langsung Setelah Checkout
               </p>
               <p
                 class="inline-flex items-center gap-2 font-medium text-brand-700"
@@ -322,13 +572,12 @@
               <p
                 class="inline-flex items-center gap-2 font-medium text-brand-700"
               >
-                <span>✨</span> GRAND OPENING — Diskon Spesial & Free Ongkir
-                Seluruh Pulau Jawa* Minimal Pembelian 100K
+                <span>✨</span> Koleksi baru sudah hadir! Cek sekarang
               </p>
               <p
                 class="inline-flex items-center gap-2 font-medium text-brand-700"
               >
-                <span>🚚</span> SIAP KIRIM LANGSUNG SETELAH CHECKOUT
+                <span>🚚</span> Siap Kirim Langsung Setelah Checkout
               </p>
               <p
                 class="inline-flex items-center gap-2 font-medium text-brand-700"
@@ -348,14 +597,14 @@
       >
         <div class="space-y-6">
           <h1
-            class="text-4xl md:text-5xl font-bold leading-tight tracking-tight"
+            class="text-4xl md:text-4xl font-bold leading-tight tracking-tight"
           >
-            Temukan style favoritmu di
+            Temukan Hijab favoritmu di <br />
             <span class="text-brand-500 drop-shadow-glow">Enaf Collection</span>
           </h1>
           <p class="text-brand-800/80 text-lg">
-            Koleksi pilihan dengan kualitas premium, nyaman dipakai, dan harga
-            bersahabat. Siap checkout lewat WhatsApp, Shopee dan DM Instagram.
+            Koleksi pilihan dengan kualitas premium, nyaman dipakai, dan harga.
+            Siap checkout lewat WhatsApp, Shopee dan DM Instagram.
           </p>
           <div class="flex flex-wrap items-center gap-3">
             <a
@@ -544,1821 +793,703 @@
 
         <div class="relative">
           <!-- Hero image placeholder -->
+          <div class="relative">
+            <div
+              id="heroImageWrapper"
+              class="rounded-3xl border border-white/60 bg-white/60 backdrop-blur overflow-hidden shadow-md animate-floaty cursor-pointer"
+            >
+              <picture class="mx-auto md:max-w-md">
+                <source
+                  media="(min-width: 768px)"
+                  srcset="./src/img/pricelist_banner.png"
+                />
+                <img
+                  src="./src/img/price_list.png"
+                  alt="Enaf Collection Price List"
+                  class="w-full h-auto object-cover"
+                  id="heroImage"
+                />
+              </picture>
+            </div>
+            <div
+              class="absolute -right-4 -top-4 bg-brand-600 text-white px-4 py-2 rounded-2xl shadow-lg rotate-2"
+            >
+              New Arrival
+            </div>
+          </div>
+
           <div
-            class="aspect-[4/3] rounded-3xl border border-white/60 bg-white/60 backdrop-blur overflow-hidden shadow-md animate-floaty"
+            id="imageModal"
+            class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm grid place-content-center p-4 transition-opacity duration-300"
           >
-            <img
-              src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop"
-              alt="Enaf Collection hero"
-              class="w-full h-full object-cover blur-sm"
-            />
+            <div class="relative max-w-4xl max-h-full">
+              <img
+                id="modalImage"
+                src=""
+                alt="Zoomed Image"
+                class="max-h-[90vh] w-auto max-w-full rounded-lg shadow-2xl"
+              />
+
+              <button
+                id="closeModal"
+                class="absolute -top-3 -right-3 size-10 rounded-full bg-white text-black text-2xl font-bold shadow-lg hover:bg-brand-500 hover:text-white transition"
+              >
+                &times;
+              </button>
+            </div>
           </div>
           <!-- floating badge -->
           <div
             class="absolute -right-4 -top-4 bg-brand-600 text-white px-4 py-2 rounded-2xl shadow-lg rotate-2"
           >
-            Coming Soon
+            New Arrival
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Divider Wave Hero -> Produk -->
-    <div class="relative -mb-[2px] overflow-hidden">
-      <svg
-        class="block w-full h-24"
-        viewBox="0 0 1440 320"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-      >
-        <defs>
-          <linearGradient id="heroToProduk" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#f6f5f4" />
-            <!-- brand-50 -->
-            <stop offset="100%" stop-color="#ffffff" />
-            <!-- white -->
-          </linearGradient>
-        </defs>
-        <path
-          fill="url(#heroToProduk)"
-          d="M0,160L48,186.7C96,213,192,267,288,272C384,277,480,235,576,197.3C672,160,768,128,864,144C960,160,1056,224,1152,234.7C1248,245,1344,203,1392,181.3L1440,160V320H0Z"
+    <div
+      id="imageModal"
+      class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm grid place-content-center p-4 transition-opacity duration-300"
+    >
+      <div class="relative max-w-4xl max-h-full">
+        <img
+          id="modalImage"
+          src=""
+          alt="Zoomed Image"
+          class="max-h-[90vh] w-auto max-w-full rounded-lg shadow-2xl"
         />
-      </svg>
+
+        <button
+          id="closeModal"
+          class="absolute -top-3 -right-3 size-10 rounded-full bg-white text-black text-2xl font-bold shadow-xl hover:bg-brand-500 hover:text-white transition"
+        >
+          &times;
+        </button>
+      </div>
     </div>
 
-    <!-- PRODUK Unggulan-->
-    <section
-      id="produk"
-      class="py-10 relative bg-gradient-to-r from-brand-50 to-white"
+    <div
+      id="imageModal"
+      class="hidden fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm grid place-content-center p-4 transition-opacity duration-300"
     >
-      <div class="mx-auto max-w-7xl px-4 w-full">
-        <div class="flex items-end justify-between mb-6">
-          <div>
-            <h2 class="text-3xl font-bold">Produk Unggulan</h2>
-            <p class="text-brand-800/80">
-              Pesan sekarang untuk produk yang terbatas!
-            </p>
-          </div>
-        </div>
-
-        <!-- Swiper -->
-        <div class="relative">
-          <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-              <!-- Card -->
-              <div class="swiper-slide p-3">
-                <article
-                  class="relative rounded-3xl border bg-white/70 backdrop-blur overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 hover:drop-shadow-glow group"
-                >
-                  <!-- Badge Limited -->
-                  <span
-                    class="absolute top-2 left-2 bg-brand-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow animate-pulse"
-                  >
-                    Premium
-                  </span>
-
-                  <!-- Gambar -->
-                  <div class="aspect-square overflow-hidden">
-                    <img
-                      src="./src/img/produk_unggulan_1.png"
-                      alt="One Set Vest"
-                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
-                    />
-                  </div>
-
-                  <!-- Konten -->
-                  <div class="p-5 space-y-2">
-                    <h3 class="text-lg font-semibold">One Set Vest</h3>
-                    <p class="text-sm text-gray-600">Bahan Scuba</p>
-
-                    <!-- Harga + Tombol -->
-                    <div class="flex items-center justify-between">
-                      <p class="text-xl font-bold">Rp 135.000</p>
-
-                      <!-- Tombol Shopee -->
-                      <a
-                        href="https://id.shp.ee/L9uXFdA"
-                        target="_blank"
-                        class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                      >
-                        <img
-                          src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                          class="w-5 h-5"
-                          alt="Shopee"
-                        />
-                        Pesan Sekarang
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Card -->
-              <div class="swiper-slide p-3">
-                <article
-                  class="relative rounded-3xl border bg-white/70 backdrop-blur overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 hover:drop-shadow-glow group"
-                >
-                  <!-- Badge Limited -->
-                  <span
-                    class="absolute top-2 left-2 bg-brand-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow animate-pulse"
-                  >
-                    Premium
-                  </span>
-
-                  <!-- Gambar -->
-                  <div class="aspect-square overflow-hidden">
-                    <img
-                      src="./src/img/produk_unggulan_2.png"
-                      alt="Zerocricle"
-                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
-                      onclick="openModal('./src/img/produk_unggulan_2.png')"
-                    />
-                  </div>
-
-                  <!-- Konten -->
-                  <div class="p-5 space-y-2">
-                    <h3 class="text-lg font-semibold">
-                      Zerocricle Long Sleeve Crop Top
-                    </h3>
-                    <p class="text-sm text-gray-600">
-                      Bahan Cotton & Polyester
-                    </p>
-
-                    <!-- Harga + Tombol -->
-                    <div class="flex items-center justify-between">
-                      <p class="text-xl font-bold">Rp 100.000</p>
-
-                      <!-- Tombol Shopee -->
-                      <a
-                        href="https://id.shp.ee/aTS76ZS"
-                        target="_blank"
-                        class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                      >
-                        <img
-                          src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                          class="w-5 h-5"
-                          alt="Shopee"
-                        />
-                        Pesan Sekarang
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Card -->
-              <div class="swiper-slide p-3">
-                <article
-                  class="relative rounded-3xl border bg-white/70 backdrop-blur overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 hover:drop-shadow-glow group"
-                >
-                  <!-- Badge Limited -->
-                  <span
-                    class="absolute top-2 left-2 bg-brand-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow animate-pulse"
-                  >
-                    Premium
-                  </span>
-
-                  <!-- Gambar -->
-                  <div class="aspect-square overflow-hidden">
-                    <img
-                      src="./src/img/produk_unggulan_3.png"
-                      alt="Baju Pantai"
-                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
-                      onclick="openModal('./src/img/produk_unggulan_3.png')"
-                    />
-                  </div>
-
-                  <!-- Konten -->
-                  <div class="p-5 space-y-2">
-                    <h3 class="text-lg font-semibold">One Set Beach</h3>
-                    <p class="text-sm text-gray-600">Bahan Kain Pantai</p>
-
-                    <!-- Harga + Tombol -->
-                    <div class="flex items-center justify-between">
-                      <p class="text-xl font-bold">Rp 80.000</p>
-
-                      <!-- Tombol Shopee -->
-                      <a
-                        href="https://id.shp.ee/MxA51Rk"
-                        target="_blank"
-                        class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                      >
-                        <img
-                          src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                          class="w-5 h-5"
-                          alt="Shopee"
-                        />
-                        Pesan Sekarang
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Card -->
-              <div class="swiper-slide p-3">
-                <article
-                  class="relative rounded-3xl border bg-white/70 backdrop-blur overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 hover:drop-shadow-glow group"
-                >
-                  <!-- Badge Limited -->
-                  <span
-                    class="absolute top-2 left-2 bg-brand-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow animate-pulse"
-                  >
-                    Premium
-                  </span>
-
-                  <!-- Gambar -->
-                  <div class="aspect-square overflow-hidden">
-                    <img
-                      src="./src/img/produk_unggulan_4.png"
-                      alt="Crop Top Uniqlo"
-                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
-                      onclick="openModal('./src/img/produk_unggulan_4.png')"
-                    />
-                  </div>
-
-                  <!-- Konten -->
-                  <div class="p-5 space-y-2">
-                    <h3 class="text-lg font-semibold">Crop Top Uniqlo</h3>
-                    <p class="text-sm text-gray-600">Bahan Cotton Stretch</p>
-
-                    <!-- Harga + Tombol -->
-                    <div class="flex items-center justify-between">
-                      <p class="text-xl font-bold">Rp 80.000</p>
-
-                      <!-- Tombol Shopee -->
-                      <a
-                        href="https://id.shp.ee/Kjd6oWE"
-                        target="_blank"
-                        class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                      >
-                        <img
-                          src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                          class="w-5 h-5"
-                          alt="Shopee"
-                        />
-                        Pesan Sekarang
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-
-              <!-- Card -->
-              <div class="swiper-slide p-3">
-                <article
-                  class="relative rounded-3xl border bg-white/70 backdrop-blur overflow-hidden shadow-md transition-transform duration-300 hover:scale-105 hover:drop-shadow-glow group"
-                >
-                  <!-- Badge Limited -->
-                  <span
-                    class="absolute top-2 left-2 bg-brand-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow animate-pulse"
-                  >
-                    Premium
-                  </span>
-
-                  <!-- Gambar -->
-                  <div class="aspect-square overflow-hidden">
-                    <img
-                      src="./src/img/produk_unggulan_5.png"
-                      alt="Crop Top Uniqlo"
-                      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 cursor-pointer"
-                      onclick="openModal('./src/img/produk_unggulan_5.png')"
-                    />
-                  </div>
-
-                  <!-- Konten -->
-                  <div class="p-5 space-y-2">
-                    <h3 class="text-lg font-semibold">
-                      Ladies Modal Tee Baleno
-                    </h3>
-                    <p class="text-sm text-gray-600">
-                      Bahan Lembut dan Nyaman Di Kulit
-                    </p>
-
-                    <!-- Harga + Tombol -->
-                    <div class="flex items-center justify-between">
-                      <p class="text-xl font-bold">Rp 80.000</p>
-
-                      <!-- Tombol Shopee -->
-                      <a
-                        href="https://id.shp.ee/8LzN9NG"
-                        target="_blank"
-                        class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                      >
-                        <img
-                          src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                          class="w-5 h-5"
-                          alt="Shopee"
-                        />
-                        Pesan Sekarang
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-          </div>
-
-          <!-- Tombol prev -->
-          <div
-            class="absolute top-1/2 -left-12 -translate-y-1/2 hidden md:block"
-          >
-            <div
-              class="swiper-button-prev !text-brand-600 !relative !left-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/70 shadow-md transition transform duration-300 hover:scale-110 hover:bg-white [&::after]:text-sm"
-            ></div>
-          </div>
-
-          <!-- Tombol next -->
-          <div
-            class="absolute top-1/2 -right-12 -translate-y-1/2 hidden md:block"
-          >
-            <div
-              class="swiper-button-next !text-brand-600 !relative !right-0 w-10 h-10 flex items-center justify-center rounded-full bg-white/70 shadow-md transition transform duration-300 hover:scale-110 hover:bg-white [&::after]:text-sm"
-            ></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- KATEGORI (Optional filter) -->
-    <section
-      id="kategori"
-      class="py-4 bg-gradient-to-b from-brand-100 to-white pb-8 relative overflow-hidden"
-    >
-      <!-- Floating Icon Dekoratif -->
-      <div
-        class="absolute bottom-100 right-4 opacity-60 animate-floaty delay-200 text-brand-900"
-      >
-        <!-- Ikon Topi -->
-        <img src="./src/img/cap.png" alt="Icon Cap" class="h-24 w-24 mt-8" />
-      </div>
-
-      <div class="mx-auto max-w-7xl px-4 w-full">
-        <div class="flex items-end justify-between mb-6">
-          <div>
-            <h2 class="text-3xl font-bold mt-4">Kategori</h2>
-            <p class="text-brand-800/80">
-              Pilih kategori untuk memfilter produk.
-            </p>
-          </div>
-        </div>
-        <div class="flex flex-wrap gap-3 mb-8">
-          <button
-            data-filter="all"
-            class="filter-btn flex-1 min-w-[120px] px-4 py-2 rounded-xl border border-brand-600/40 bg-white/70 backdrop-blur hover:border-brand-600 transition"
-          >
-            Semua
-          </button>
-          <button
-            data-filter="atasan"
-            class="filter-btn flex-1 min-w-[120px] px-4 py-2 rounded-xl border border-brand-600/40 bg-white/70 backdrop-blur hover:border-brand-600 transition"
-          >
-            Atasan
-          </button>
-
-          <button
-            data-filter="bawahan"
-            class="filter-btn flex-1 min-w-[120px] px-4 py-2 rounded-xl border border-brand-600/40 bg-white/70 backdrop-blur hover:border-brand-600 transition"
-          >
-            Bawahan
-          </button>
-        </div>
-
-        <!-- Grid preview kecil -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gridKategori">
-          <!-- Atasan 1 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_1.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_1.png"
-                alt="Kaos Polos Basic"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kaos Polos Basic
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Jersey Double Layer</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 45.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/nDPELZH"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 2 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_2.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_2.png"
-                alt="Kemeja Kuliah"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kemeja Kuliah
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Cotton Cuff</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 45.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/P4LtvtM"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 3 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_3.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_3.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Atasan Wanita
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Fabric</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 50.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/MRskkKp"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 4 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_4.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_4.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Atasan Wanita
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Stretch</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 50.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/qJeJigP"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 5 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_5.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_5.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Baju Rajut
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Rajut Knit Premium</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 50.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/1JVUzK4"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 6 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_6.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_6.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Vest Wanita
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 55.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/qkJdZ6D"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 7 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_7.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_7.png"
-                alt="Kaos Daily Basic"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kaos Daily Basic
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Stretch</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 30.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/bPYZXew"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 8 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_8.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_8.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Atasan Wanita Blouse
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 45.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/fKTdKXe"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 9 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_9.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_9.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kemeja Kuliah
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 50.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/LgTy2KP"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 10 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_10.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_10.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kemeja Kuliah
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun Linen</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 50.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/fXKqDyQ"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 11 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_11.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_11.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Atasan Vest Colorbox
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Stretch</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 60.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/Bz9DyvD"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 12 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_12.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_12.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Baju Wanita Bloused
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun Linen</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 40.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/gQ3S1RE"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 13 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_13.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_13.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Bodysuit Lengan Pendek
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Stretch</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 55.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/1D5hnQH"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 14 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_14.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_14.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kaos Polos Lengan Panjang
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Stretch</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 30.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/33dUcvc"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 15 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_15.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_15.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kemeja Kuliah
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun Linen</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 55.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/qo1kftm"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 16 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_16.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_16.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Crop Top Colorbox
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Knitt Rib</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 45.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/NX5Yj2i"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 17 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_17.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_17.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kaos Giant Basic
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun Stretch</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 50.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/b1uktFp"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 18 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_18.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_18.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Atasan Daily
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun Linen</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 35.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/viNGeeq"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 19 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_19.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_19.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Atasan Blouse
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun Linen</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 45.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/JXccrxa"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 20 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_20.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_20.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Dress Mini
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Katun Linen</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 45.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/V31pv3Z"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 21 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_21.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_21.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Kaos Daily
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Stretch</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 40.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/YnEeXky"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 22 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_22.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_22.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Uniqlo V-Neck Sweater
-              </h3>
-              <p class="text-brand-800/80 text-sm">
-                Bahan Acrylic Knit Stretch
-              </p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 60.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/JpyBhPW"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 23 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_23.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_23.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Sport Bra (Fitness, Yoga)
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Polyester & Spandex</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 60.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/nmxh3ky"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Atasan 24 -->
-          <article
-            data-category="atasan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/atasan_24.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/atasan_24.png"
-                alt="Atasan Wanita"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Sport Wear
-              </h3>
-              <p class="text-brand-800/80 text-sm">
-                Bahan Dry Fit (Polyester Spandex)
-              </p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 60.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/CoUUR3c"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Bawahan 1 -->
-          <article
-            data-category="bawahan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/bawahan_1.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/bawahan_1.png"
-                alt="Celana Cutbray"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Celana Jeans Cutbray
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Denim Stretch</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 60.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/xZ4yeS1"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Bawahan 2 -->
-          <article
-            data-category="bawahan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/bawahan_2.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/bawahan_2.png"
-                alt="Rok Jeans"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Rok Jeans Colorbox
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Cotton Denim</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 60.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/eX4xEgh"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Bawahan 3 -->
-          <article
-            data-category="bawahan"
-            class="relative rounded-2xl border border-gray-200 bg-white shadow-md overflow-hidden group hover:shadow-xl transition-all duration-300"
-          >
-            <!-- Gambar -->
-            <div
-              class="overflow-hidden cursor-pointer"
-              onclick="openModal('./src/img/bawahan_3.png')"
-            >
-              <img
-                class="h-full w-full object-cover transform group-hover:scale-110 transition duration-500"
-                src="./src/img/bawahan_3.png"
-                alt="Jeans Bershka"
-              />
-            </div>
-
-            <!-- Konten -->
-            <div class="p-4 space-y-2">
-              <h3
-                class="font-semibold text-lg group-hover:text-brand-600 transition"
-              >
-                Celana Jeans Bershka
-              </h3>
-              <p class="text-brand-800/80 text-sm">Bahan Cotton Denim</p>
-
-              <!-- Harga + Tombol -->
-              <div class="flex items-center justify-between">
-                <p class="text-xl font-bold">Rp 60.000</p>
-
-                <!-- Tombol Shopee -->
-                <a
-                  href="https://id.shp.ee/UQXNvtu"
-                  target="_blank"
-                  class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
-                >
-                  <img
-                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-                    class="w-5 h-5"
-                    alt="Shopee"
-                  />
-                  Pesan Sekarang
-                </a>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <!-- Tombol tampilkan lebih banyak -->
-        <div class="flex justify-center mt-6">
-          <button
-            id="loadMoreBtn"
-            class="px-6 py-2 rounded-xl bg-brand-600 text-white font-semibold hover:bg-brand-700 transition"
-          >
-            Tampilkan Lebih Banyak
-          </button>
-        </div>
-
-        <!-- Modal -->
-        <div
-          id="imageModal"
-          class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50"
-        >
-          <div class="max-w-5xl w-auto mx-4">
-            <!-- Wrapper Gambar -->
-            <div class="relative inline-block animate-zoom-fade">
-              <!-- Tombol Close -->
-              <button
-                onclick="closeModal()"
-                class="absolute -top-0 -right-0 mt-1 mr-2 flex items-center justify-center w-8 h-8 rounded-full bg-black/70 text-white text-xl font-bold hover:bg-red-500/80 hover:scale-110 transition"
-              >
-                &times;
-              </button>
-
-              <!-- Gambar -->
-              <img
-                id="modalImage"
-                src=""
-                alt="Preview"
-                class="rounded-xl shadow-lg max-h-[80vh] object-contain"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Divider Wave Kategori -> Metode -->
-    <div class="relative overflow-hidden rotate-180 -mb-1">
-      <svg
-        class="w-full h-24 block"
-        viewBox="0 0 1440 320"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-        shape-rendering="geometricPrecision"
-      >
-        <path
-          fill="#ffffff"
-          stroke="none"
-          d="M0,160L48,186.7C96,213,192,267,288,272C384,277,480,235,576,197.3C672,160,768,128,864,144C960,160,1056,224,1152,234.7C1248,245,1344,203,1392,181.3L1440,160V320H0Z"
+      <div class="relative max-w-4xl max-h-full">
+        <img
+          id="modalImage"
+          src=""
+          alt="Zoomed Image"
+          class="max-h-[90vh] w-auto max-w-full rounded-lg shadow-2xl"
         />
-      </svg>
+
+        <button
+          id="closeModal"
+          class="absolute -top-3 -right-3 size-10 rounded-full bg-white text-black text-2xl font-bold shadow-xl hover:bg-brand-500 hover:text-white transition"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <section id="produk-polos" class="py-10 bg-gray-50">
+      <div class="container mx-auto px-4 relative">
+        <div
+          class="category-hero h-48 rounded-2xl mb-8"
+          data-aos="fade-up"
+        ></div>
+
+        <div class="text-center mb-8 mt-8" data-aos="fade-up">
+          <h2 class="text-3xl font-bold text-gray-800">Segiempat Polos</h2>
+          <p class="text-gray-500">Produk hijab polos premium ✨</p>
+        </div>
+
+        <div class="relative">
+          <button
+            id="polos-prev"
+            class="carousel-button left-0 lg:block hidden ml-2"
+          >
+            <svg
+              class="w-6 h-6 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </button>
+
+          <div
+            id="polos-carousel"
+            class="carousel-container flex overflow-x-scroll snap-x snap-mandatory pb-4 lg:overflow-x-hidden"
+            data-aos="fade-up"
+          >
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item ml-4 lg:ml-0 h-full"
+            >
+              <img
+                class="popup-trigger w-full aspect-square object-cover cursor-pointer h-auto"
+                src="./src/img/segiempat_abu.png"
+                data-title="Segi Empat Abu"
+                data-price="Rp 50.000"
+                alt="Segi Empat Abu"
+              />
+              <div class="p-4 flex flex-col flex-grow">
+                <h4 class="font-semibold text-gray-800 mb-1">Segi Empat Abu</h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Hijab premium dengan bahan double chiffon yang lembut dan
+                  ringan dipakai.
+                </p>
+                <p class="text-lg font-bold text-gray-900 mt-2">Rp 49.000</p>
+                <a
+                  target="_blank"
+                  href="https://s.shopee.co.id/3fwY8XlfLs"
+                  class="btn-shopee mt-4 flex items-center justify-center gap-2"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item h-full"
+            >
+              <img
+                class="popup-trigger w-full aspect-square object-cover cursor-pointer h-auto"
+                src="./src/img/segiempat_hitam.png"
+                data-title="Hijab Hitam Polos"
+                data-price="Rp 60.000"
+                alt="Hijab Hitam Polos"
+              />
+              <div class="p-4 flex flex-col flex-grow">
+                <h4 class="font-semibold text-gray-800 mb-1">
+                  Hijab Hitam Polos
+                </h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Warna hitam polos yang formal, sangat lembut dan ringan serta
+                  tidak mudah kusut.
+                </p>
+                <p class="text-lg font-bold text-gray-900 mt-2">Rp 60.000</p>
+                <a
+                  target="_blank"
+                  href="https://s.shopee.co.id/3fwY8XlfLs"
+                  class="btn-shopee mt-4 flex items-center justify-center gap-2"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item h-full"
+            >
+              <img
+                class="popup-trigger w-full aspect-square object-cover cursor-pointer h-auto"
+                src="./src/img/segiempat_mustard.png"
+                data-title="Hijab Mustard"
+                data-price="Rp 70.000"
+                alt="Hijab Mustard"
+              />
+              <div class="p-4 flex flex-col flex-grow">
+                <h4 class="font-semibold text-gray-800 mb-1">Hijab Mustard</h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Hijab warna mustard mudah dipadukan untuk tampilan sehari-hari
+                  maupun acara spesial.
+                </p>
+                <p class="text-lg font-bold text-gray-900 mt-2">Rp 70.000</p>
+                <a
+                  target="_blank"
+                  href="https://s.shopee.co.id/40ZOXBFXzi"
+                  class="btn-shopee mt-4 flex items-center justify-center gap-2"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item mr-4 lg:mr-0 h-full"
+            >
+              <img
+                class="popup-trigger w-full aspect-square object-cover cursor-pointer h-auto"
+                src="./src/img/segiempat_sage.png"
+                data-title="Hijab Sage Polos"
+                data-price="Rp 70.000"
+                alt="Hijab Sage Polos"
+              />
+              <div class="p-4 flex flex-col flex-grow">
+                <h4 class="font-semibold text-gray-800 mb-1">
+                  Hijab Sage Polos
+                </h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Hijab warna sage polos sempurna untuk tampilan simple namun
+                  tetap elegan.
+                </p>
+                <p class="text-lg font-bold text-gray-900 mt-2">Rp 70.000</p>
+                <a
+                  target="_blank"
+                  href="https://s.shopee.co.id/40ZOXBFXzi"
+                  class="btn-shopee mt-4 flex items-center justify-center gap-2"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <button
+            id="polos-next"
+            class="carousel-button right-0 lg:block hidden mr-2"
+          >
+            <svg
+              class="w-6 h-6 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="produk-printing" class="py-10 bg-gray-50">
+      <div class="container mx-auto px-4 relative">
+        <div class="category-hero-printing"></div>
+
+        <div class="text-center mb-8 mt-8" data-aos="fade-up">
+          <h2 class="text-3xl font-bold text-gray-800">Segiempat Printing</h2>
+          <p class="text-gray-500">Produk hijab printing premium ✨</p>
+        </div>
+
+        <div class="relative">
+          <button
+            id="printing-prev"
+            class="carousel-button left-0 lg:block hidden ml-2"
+          >
+            <svg
+              class="w-6 h-6 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              ></path>
+            </svg>
+          </button>
+
+          <div
+            id="printing-carousel"
+            class="carousel-container flex overflow-x-scroll snap-x snap-mandatory pb-4 lg:overflow-x-hidden"
+            data-aos="fade-up"
+          >
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item ml-4 lg:ml-0 h-full"
+            >
+              <img
+                src="./src/img/segiempat_pink_bunga_printing.png"
+                class="w-full aspect-square object-cover cursor-pointer popup-trigger h-auto"
+                data-title="Printing Pink Motif Bunga"
+                data-price="Rp 60.000"
+              />
+              <div class="p-4 flex flex-col flex-grow">
+                <h4 class="font-semibold text-gray-800 mb-1">
+                  Printing Pink Motif Bunga
+                </h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Hijab printing pink motif bunga ini menghadirkan tampilan
+                  manis dengan sentuhan desain yang fresh dan anggun.
+                </p>
+                <p class="text-lg font-bold text-gray-900 mt-2">Rp 60.000</p>
+                <a
+                  target="_blank"
+                  href="https://s.shopee.co.id/13FlkNvVO"
+                  target="_blank"
+                  class="btn-shopee mt-4 flex items-center justify-center"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item h-full"
+            >
+              <img
+                src="./src/img/segiempat_pink_gradasi_printing.png"
+                class="w-full aspect-square object-cover cursor-pointer popup-trigger h-auto"
+                data-title="Printing Pink Gradasi"
+                data-price="Rp 70.000"
+              />
+              <div class="p-4 flex-grow flex flex-col">
+                <h4 class="font-semibold text-gray-800">
+                  Printing Pink Gradasi
+                </h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Hijab pink gradasi dengan perpaduan warna lembut yang memberi
+                  kesan elegan dan cantik dalam satu tampilan.
+                </p>
+                <p class="text-lg font-bold text-gray-900">Rp 70.000</p>
+                <a
+                  href="https://s.shopee.co.id/qcMlIob9Z"
+                  target="_blank"
+                  class="btn-shopee mt-4 flex items-center justify-center"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item h-full"
+            >
+              <img
+                src="./src/img/segiempat_lilac_printing.png"
+                class="w-full aspect-square object-cover cursor-pointer popup-trigger h-auto"
+                data-title="Printing Lilac Motif Bunga"
+                data-price="Rp 55.000"
+              />
+              <div class="p-4 flex-grow flex flex-col">
+                <h4 class="font-semibold text-gray-800">
+                  Printing Lilac Motif Bunga
+                </h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Hijab printing lilac motif bunga bernuansa lembut dan anggun
+                  dengan desain floral menawan.
+                </p>
+                <p class="text-lg font-bold text-gray-900">Rp 55.000</p>
+                <a
+                  href="https://s.shopee.co.id/13FlkNvVO"
+                  target="_blank"
+                  class="btn-shopee mt-4 flex items-center justify-center"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item h-full"
+            >
+              <img
+                src="./src/img/segiempat_hijau_gradasi_printing.png"
+                class="w-full aspect-square object-cover cursor-pointer popup-trigger h-auto"
+                data-title="Printing Hijau Gradasi"
+                data-price="Rp 70.000"
+              />
+              <div class="p-4 flex-grow flex flex-col">
+                <h4 class="font-semibold text-gray-800">
+                  Printing Hijau Gradasi
+                </h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Perpaduan hijau gradasi yang menenangkan memberi kesan segar
+                  dan elegan.
+                </p>
+                <p class="text-lg font-bold text-gray-900">Rp 70.000</p>
+                <a
+                  href="https://s.shopee.co.id/qcMlIob9Z"
+                  target="_blank"
+                  class="btn-shopee mt-4 flex items-center justify-center"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item h-full"
+            >
+              <img
+                src="./src/img/segiempat_abu_gradasi_printing.png"
+                class="w-full aspect-square object-cover cursor-pointer popup-trigger h-auto"
+                data-title="Printing Abu Gradasi"
+                data-price="Rp 70.000"
+              />
+              <div class="p-4 flex-grow flex flex-col">
+                <h4 class="font-semibold text-gray-800">
+                  Printing Abu Gradasi
+                </h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Tampilan modern dan elegan dengan perpaduan abu gradasi yang
+                  lembut dan mudah dipadukan.
+                </p>
+                <p class="text-lg font-bold text-gray-900">Rp 70.000</p>
+                <a
+                  href="https://s.shopee.co.id/qcMlIob9Z"
+                  target="_blank"
+                  class="btn-shopee mt-4 flex items-center justify-center"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="bg-white shadow-md rounded-2xl overflow-hidden flex flex-col product-card snap-start product-slide-item mr-4 lg:mr-0 h-full"
+            >
+              <img
+                src="./src/img/segiempat_biru_garis.png"
+                class="w-full aspect-square object-cover cursor-pointer popup-trigger h-auto"
+                data-title="Printing Biru Motif Garis"
+                data-price="Rp 60.000"
+              />
+              <div class="p-4 flex-grow flex flex-col">
+                <h4 class="font-semibold text-gray-800">
+                  Printing Biru Motif Garis
+                </h4>
+                <p class="text-sm text-gray-500 flex-grow mb-3">
+                  Hijab biru bermotif garis yang modern dan stylish dengan
+                  detail pattern simpel namun elegan.
+                </p>
+                <p class="text-lg font-bold text-gray-900">Rp 60.000</p>
+                <a
+                  href="https://s.shopee.co.id/4AsojLVg90"
+                  target="_blank"
+                  class="btn-shopee mt-4 flex items-center justify-center"
+                >
+                  <img
+                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                    class="h-5 w-5"
+                  />
+                  Beli di Shopee
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <button
+            id="printing-next"
+            class="carousel-button right-0 lg:block hidden mr-2"
+          >
+            <svg
+              class="w-6 h-6 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div
+      id="universalModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-[9999]"
+    >
+      <div class="bg-white rounded-2xl p-6 w-11/12 max-w-md relative shadow-lg">
+        <button
+          id="closeUniversalModal"
+          class="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
+        >
+          ✕
+        </button>
+        <img
+          id="modalImg"
+          src=""
+          class="w-full rounded-xl mb-4 object-cover aspect-square"
+        />
+        <h3
+          id="modalTitle"
+          class="text-xl font-bold text-gray-800 text-center"
+        ></h3>
+        <p
+          id="modalPrice"
+          class="text-lg font-semibold text-gray-900 text-center mt-2"
+        ></p>
+      </div>
     </div>
 
     <!-- METODE PEMBAYARAN -->
-    <section id="pembayaran" class="py-2 md:py-3 lg:py-4">
+    <section id="pembayaran" class="py-10">
       <div class="container mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-10">Metode Pembayaran</h2>
+        <h2 class="text-3xl font-bold text-center mb-12 mt-8">
+          Metode Pembayaran
+        </h2>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-          <!-- Dana -->
-          <div
-            class="rounded-2xl border border-white/60 bg-white/70 backdrop-blur p-6 flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
-          >
-            <img
-              src="./src/img/dana.png"
-              alt="Dana Logo"
-              class="h-16 object-contain"
-            />
-          </div>
-
-          <!-- ShopeePay -->
-          <div
-            class="rounded-2xl border border-white/60 bg-white/70 backdrop-blur p-6 flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
-          >
-            <img
-              src="./src/img/shopee_pay_logo.png"
-              alt="ShopeePay Logo"
-              class="h-16 object-contain"
-            />
-          </div>
-
-          <!-- Bank Bri -->
-          <div
-            class="rounded-2xl border border-white/60 bg-white/70 backdrop-blur p-6 flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
-          >
-            <img
-              src="./src/img/bank_bri.png"
-              alt="Shopee Logo"
-              class="h-16 object-contain"
-            />
-          </div>
-
-          <!-- Bank BSI -->
-          <div
-            class="rounded-2xl border border-white/60 bg-white/70 backdrop-blur p-6 flex items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
-          >
-            <img
-              src="./src/img/bank_bsi.png"
-              alt="Transfer Bank Logo"
-              class="h-16 object-contain"
-            />
-          </div>
-
-          <!-- QRIS -->
-          <div
-            class="rounded-2xl border border-white/60 bg-white/70 backdrop-blur p-6 flex flex-col items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
-          >
-            <img
-              src="./src/img/qris.png"
-              alt="QRIS Logo"
-              class="h-16 object-contain mb-2"
-            />
-          </div>
-
-          <!-- COD -->
-          <div
-            class="rounded-2xl border border-white/60 bg-white/70 backdrop-blur p-6 flex flex-col items-center justify-center shadow-lg hover:scale-105 hover:shadow-xl transition-transform duration-300"
-          >
+        <!-- Payment Icons -->
+        <div class="flex flex-wrap items-center justify-center gap-6">
+          <img
+            src="./src/img/dana.png"
+            alt="Dana"
+            class="h-12 grayscale hover:grayscale-0 transition cursor-pointer"
+          />
+          <img
+            src="./src/img/shopee_pay_logo.png"
+            alt="ShopeePay"
+            class="h-12 grayscale hover:grayscale-0 transition cursor-pointer"
+          />
+          <img
+            src="./src/img/bank_bri.png"
+            alt="BRI"
+            class="h-12 grayscale hover:grayscale-0 transition cursor-pointer"
+          />
+          <img
+            src="./src/img/bank_bsi.png"
+            alt="BSI"
+            class="h-12 grayscale hover:grayscale-0 transition cursor-pointer"
+          />
+          <img
+            src="./src/img/qris.png"
+            alt="QRIS"
+            class="h-12 grayscale hover:grayscale-0 transition cursor-pointer"
+          />
+          <div class="flex flex-col items-center">
             <img
               src="./src/img/cod.png"
-              alt="COD Logo"
-              class="h-16 object-contain mb-2"
+              alt="COD"
+              class="h-12 grayscale hover:grayscale-0 transition cursor-pointer"
             />
-            <span class="text-sm font-semibold text-gray-700"
+            <span class="text-xs font-semibold text-gray-700"
               >COD (Yogyakarta)</span
             >
           </div>
         </div>
 
         <!-- CTA -->
-        <div
-          class="mt-6 mb-6 rounded-3xl border border-white/60 bg-gradient-to-r from-white/70 to-white/50 backdrop-blur p-4 flex flex-wrap items-center justify-between gap-4 shadow-md"
-        >
-          <span class="font-semibold text-gray-800"
-            >Tersedia juga di Shopee</span
-          >
+        <div class="text-center mt-12 mb-12">
           <a
             href="https://shopee.co.id/enafcollection_"
             target="_blank"
-            class="flex items-center gap-2 border border-gray-600 text-sm font-semibold px-3 py-2 rounded-xl transition transform hover:scale-110"
+            class="btn-shopee inline-flex items-center gap-2"
           >
             <img
               src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
-              alt="Shopee"
-              class="h-5 w-5"
+              class="h-6 w-6"
             />
-            Beli di Shopee
+            Cek di Shopee Sekarang
           </a>
         </div>
       </div>
     </section>
 
+    <!-- Modal Popup -->
+    <div
+      id="productModal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-[9999]"
+    >
+      <div
+        class="bg-white rounded-2xl p-6 w-11/12 md:w-96 shadow-lg transform scale-95 transition-all duration-300"
+        data-aos="zoom-in"
+      >
+        <!-- Close Button -->
+        <button
+          id="closeModal"
+          class="absolute right-5 top-5 text-gray-400 hover:text-gray-600 text-xl"
+        >
+          ✕
+        </button>
+
+        <!-- Modal Content -->
+        <div class="text-center">
+          <img
+            id="modalImage"
+            src=""
+            alt="Product"
+            class="w-32 h-32 object-cover mx-auto rounded-xl mb-4"
+          />
+
+          <h3 id="modalTitle" class="text-xl font-bold text-gray-800 mb-1"></h3>
+          <p
+            id="modalPrice"
+            class="text-lg font-semibold text-gray-900 mb-4"
+          ></p>
+
+          <!-- Buttons -->
+          <div class="flex flex-col gap-3">
+            <a
+              id="modalShopee"
+              target="_blank"
+              class="btn-shopee flex items-center justify-center gap-2 text-lg"
+            >
+              <img
+                src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                class="h-5 w-5"
+                alt=""
+              />
+              Beli di Shopee
+            </a>
+
+            <a
+              id="modalWa"
+              target="_blank"
+              class="flex items-center justify-center gap-2 bg-green-500 text-white py-2 px-4 rounded-xl hover:bg-green-600 transition"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/124/124034.png"
+                class="h-5 w-5"
+                alt=""
+              />
+              Tanya via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- FOOTER -->
     <footer
       id="kontak"
-      class="border-t border-white/60 bg-white/50 backdrop-blur"
+      class="border-t border-white/60 bg-white/50 backdrop-blur pt-8 pb-4"
     >
       <div class="mx-auto max-w-7xl px-4 py-2 grid md:grid-cols-3 gap-8">
         <div>
@@ -2366,7 +1497,7 @@
             <div class="place-content-center">
               <a class="hover:shadow-brand-100" href="#home">
                 <img
-                  src="./src/img/icon_full.svg"
+                  src="./src/img/enaf_text.svg"
                   alt="Enaf Icon"
                   class="w-24 h-24"
               /></a>
@@ -2571,19 +1702,267 @@
           </div>
         </div>
       </div>
-      <div class="text-center text-sm text-brand-900 font-semibold pb-4 pt-4">
+
+      <!-- Divider -->
+      <div class="flex items-center justify-center mt-6 mb-2">
+        <div class="flex items-center w-full max-w-md px-4">
+          <!-- Garis kiri -->
+          <div class="flex-grow border-t border-brand-700/40"></div>
+
+          <!-- Logo di tengah -->
+          <img
+            src="./src/img/icon_enaf.svg"
+            alt="Enaf Logo"
+            class="mx-3 w-10 h-10"
+          />
+
+          <!-- Garis kanan -->
+          <div class="flex-grow border-t border-brand-700/40"></div>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="text-center text-sm text-brand-900 font-medium pb-4 pt-4">
         © <span id="year"></span> Enaf Collection. All rights reserved.
       </div>
-    </footer>
 
+      <!-- UNIVERSAL MODAL POPUP -->
+      <div
+        id="universalModal"
+        class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-[9999]"
+      >
+        <div
+          class="bg-white rounded-2xl p-6 w-11/12 max-w-md relative shadow-lg animate__animated animate__zoomIn"
+        >
+          <!-- Close Button -->
+          <button
+            id="closeUniversalModal"
+            class="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
+          >
+            ✕
+          </button>
+
+          <!-- Image -->
+          <img
+            id="modalImg"
+            src=""
+            class="w-full rounded-xl mb-4 object-cover max-h-72"
+          />
+
+          <!-- Title -->
+          <h3
+            id="modalTitle"
+            class="text-xl font-bold text-gray-800 mb-2 text-center"
+          ></h3>
+
+          <!-- Description -->
+          <p id="modalDesc" class="text-gray-500 text-center mb-3"></p>
+
+          <!-- Price -->
+          <p
+            id="modalPrice"
+            class="text-lg font-bold text-gray-900 text-center mb-4"
+          ></p>
+
+          <!-- Buttons -->
+          <div class="flex flex-col gap-3">
+            <!-- Shopee Button -->
+            <a
+              id="modalShopee"
+              class="btn-shopee flex items-center justify-center gap-2"
+            >
+              <img
+                src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/shopee-icon.png"
+                class="h-5 w-5"
+              />
+              Beli di Shopee
+            </a>
+
+            <!-- Optional WhatsApp Button -->
+            <a
+              id="modalWA"
+              class="flex items-center justify-center gap-2 bg-green-500 text-white py-2 px-4 rounded-xl hover:bg-green-600 transition"
+            >
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/124/124034.png"
+                class="h-5 w-5"
+              />
+              Tanya via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- AOS & Swiper JS -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <!-- SCRIPTS -->
     <script>
-      // Year
-      document.getElementById("year").textContent = new Date().getFullYear();
+      function initCarousel(carouselId, prevButtonId, nextButtonId) {
+        const carousel = document.getElementById(carouselId);
+        const prevButton = document.getElementById(prevButtonId);
+        const nextButton = document.getElementById(nextButtonId);
+        const items = carousel.querySelectorAll(".product-slide-item");
 
-      // Blur, translucent nav on scroll
+        if (!carousel || items.length === 0) return;
+
+        let autoSlideInterval;
+        // Cek ukuran layar untuk menentukan mode (Desktop: >= 1024px)
+        let isDesktop = window.innerWidth >= 1024;
+        const slideDuration = 3000; // 3 detik
+
+        const getScrollDistance = () => {
+          const firstItem = items[0];
+          const itemWidth = firstItem.offsetWidth;
+          const gap = 24; // gap-6
+
+          if (isDesktop) {
+            // Desktop: Scroll 3 item
+            // Kita gunakan perkiraan pergeseran 3 item lebar penuh.
+            return itemWidth * 3 + gap * 2;
+          } else {
+            // Mobile: Scroll 1 item (berdasarkan snap-start)
+            return itemWidth + gap;
+          }
+        };
+
+        const scrollCarousel = (direction) => {
+          const distance = getScrollDistance();
+
+          if (direction === "next") {
+            // Cek apakah sudah di akhir (toleransi 1px)
+            if (
+              carousel.scrollLeft + carousel.clientWidth >=
+              carousel.scrollWidth - 1
+            ) {
+              carousel.scrollLeft = 0; // Kembali ke awal
+            } else {
+              carousel.scrollLeft += distance;
+            }
+          } else if (direction === "prev") {
+            // Cek apakah sudah di awal (toleransi 1px)
+            if (carousel.scrollLeft <= 1) {
+              // Jika di awal, pindah ke posisi yang menampilkan set item terakhir
+              const scrollEndPosition =
+                carousel.scrollWidth - carousel.clientWidth;
+              carousel.scrollLeft = scrollEndPosition;
+            } else {
+              carousel.scrollLeft -= distance;
+            }
+          }
+        };
+
+        // --- LOGIKA DESKTOP: Auto-slide & Tombol Navigasi ---
+        const startAutoSlide = () => {
+          if (!isDesktop) return; // Hanya jalankan di desktop
+          clearInterval(autoSlideInterval);
+          autoSlideInterval = setInterval(() => {
+            scrollCarousel("next");
+          }, slideDuration);
+        };
+
+        if (isDesktop) {
+          // Tombol Navigasi
+          if (prevButton) {
+            prevButton.addEventListener("click", () => {
+              clearInterval(autoSlideInterval);
+              scrollCarousel("prev");
+              startAutoSlide();
+            });
+          }
+
+          if (nextButton) {
+            nextButton.addEventListener("click", () => {
+              clearInterval(autoSlideInterval);
+              scrollCarousel("next");
+              startAutoSlide();
+            });
+          }
+
+          // Auto-slide dan Hover
+          startAutoSlide();
+          carousel.addEventListener("mouseenter", () =>
+            clearInterval(autoSlideInterval)
+          );
+          carousel.addEventListener("mouseleave", startAutoSlide);
+        } else {
+          // Non-Desktop (Mobile/Tablet): Pastikan auto-slide dihentikan
+          clearInterval(autoSlideInterval);
+        }
+
+        // Set posisi scroll awal
+        carousel.scrollLeft = 0;
+
+        // Handle Resize (jika pengguna mengubah ukuran jendela/rotasi perangkat)
+        window.addEventListener("resize", () => {
+          const newIsDesktop = window.innerWidth >= 1024;
+          if (newIsDesktop !== isDesktop) {
+            // Jika mode berubah (mobile ke desktop atau sebaliknya), refresh logika
+            isDesktop = newIsDesktop;
+            if (isDesktop) {
+              // Sembunyikan/Tampilkan tombol dilakukan oleh class Tailwind (lg:hidden/lg:block)
+              startAutoSlide(); // Mulai auto-slide untuk desktop
+            } else {
+              clearInterval(autoSlideInterval); // Hentikan auto-slide untuk mobile
+            }
+            carousel.scrollLeft = 0; // Reset scroll saat mode berubah
+          }
+        });
+      }
+
+      // Inisialisasi kedua carousel setelah DOM dimuat
+      document.addEventListener("DOMContentLoaded", () => {
+        initCarousel("polos-carousel", "polos-prev", "polos-next");
+        initCarousel("printing-carousel", "printing-prev", "printing-next");
+      });
+      /* ===============================
+   1) UNIVERSAL IMAGE MODAL POPUP
+================================*/
+
+      const modal = document.getElementById("universalModal");
+      const closeBtn = document.getElementById("closeUniversalModal");
+      const modalImg = document.getElementById("modalImg");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalPrice = document.getElementById("modalPrice");
+
+      // Trigger modal pada semua gambar dengan class .popup-trigger
+      document.querySelectorAll(".popup-trigger").forEach((img) => {
+        img.addEventListener("click", () => {
+          modalImg.src = img.src;
+          modalTitle.innerText = img.dataset.title || "";
+          modalPrice.innerText = img.dataset.price || "";
+
+          // START MODIFIKASI: Ganti 'hidden' menjadi 'flex'
+          modal.classList.remove("hidden");
+          modal.classList.add("flex"); // <<< Tambahkan kelas flex
+          // END MODIFIKASI
+
+          document.body.style.overflow = "hidden"; // lock scroll
+        });
+      });
+
+      closeBtn.addEventListener("click", () => closePopup());
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closePopup();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closePopup();
+      });
+
+      function closePopup() {
+        // START MODIFIKASI: Hapus kelas 'flex' dan tambahkan 'hidden'
+        modal.classList.remove("flex"); // <<< Hapus kelas flex
+        modal.classList.add("hidden");
+        // END MODIFIKASI
+
+        document.body.style.overflow = "";
+      }
+      /* ===============================
+   2) NAVBAR TRANSPARENT ON SCROLL
+================================*/
+
       const nav = document.getElementById("nav");
-      const setNav = () => {
+      function setNav() {
         if (window.scrollY > 8) {
           nav.classList.add(
             "backdrop-blur",
@@ -2599,21 +1978,26 @@
             "border-white/60"
           );
         }
-      };
+      }
       setNav();
       window.addEventListener("scroll", setNav);
 
-      // Mobile menu toggle
+      /* ===============================
+   3) MOBILE NAV MENU
+================================*/
+
       const openBtn = document.getElementById("openMenu");
       const mobile = document.getElementById("mobileNav");
       const ham = document.getElementById("hamburger");
       const closeI = document.getElementById("close");
-      openBtn.addEventListener("click", () => {
+
+      openBtn?.addEventListener("click", () => {
         mobile.classList.toggle("hidden");
         ham.classList.toggle("hidden");
         closeI.classList.toggle("hidden");
       });
-      mobile.querySelectorAll("a").forEach((a) =>
+
+      mobile?.querySelectorAll("a").forEach((a) =>
         a.addEventListener("click", () => {
           mobile.classList.add("hidden");
           ham.classList.remove("hidden");
@@ -2621,152 +2005,111 @@
         })
       );
 
-      // === FILTER KATEGORI ===
-      const btns = document.querySelectorAll(".filter-btn");
-      const cards = document.querySelectorAll("#gridKategori [data-category]");
-      let currentFilter = "all"; // simpan filter aktif
-
-      btns.forEach((b) =>
-        b.addEventListener("click", () => {
-          btns.forEach((x) => x.classList.remove("bg-brand-600", "text-white"));
-          btns.forEach((x) =>
-            x.classList.add(
-              "border",
-              "border-brand-600/40",
-              "bg-white/70",
-              "backdrop-blur"
-            )
-          );
-          b.classList.add("bg-brand-600", "text-white");
-          currentFilter = b.dataset.filter; // update filter aktif
-
-          applyFilterAndLimit(); // tampilkan sesuai filter + batasan load more
-        })
-      );
-
-      // === LOAD MORE ===
-      const loadMoreBtn = document.getElementById("loadMoreBtn");
-      let itemsPerPage = 6;
-      let currentCount = 0;
-
-      function applyFilterAndLimit() {
-        let visibleItems = [];
-        cards.forEach((c) => {
-          const match =
-            currentFilter === "all" || c.dataset.category === currentFilter;
-          c.style.display = match ? "none" : "none"; // sembunyikan semua dulu
-          if (match) visibleItems.push(c);
-        });
-
-        // Tampilkan sesuai limit
-        visibleItems.forEach((item, i) => {
-          if (i < currentCount) {
-            item.style.display = "block";
-          }
-        });
-
-        // Cek tombol load more
-        if (currentCount >= visibleItems.length) {
-          loadMoreBtn.style.display = "none";
-        } else {
-          loadMoreBtn.style.display = "block";
-        }
-      }
-
-      function showItems() {
-        currentCount += itemsPerPage;
-        applyFilterAndLimit();
-      }
-
-      // Init
-      document.addEventListener("DOMContentLoaded", () => {
-        currentCount = itemsPerPage;
-        applyFilterAndLimit();
+      /* ===============================
+   4) AOS (Animation on Scroll)
+================================*/
+      AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100,
       });
 
-      // Event tombol load more
-      loadMoreBtn.addEventListener("click", showItems);
+      /* ===============================
+   5) SWIPER SLIDER
+================================*/
 
-      // Unified hover for WA buttons (pulse ring)
-      document.querySelectorAll(".wa-btn").forEach((btn) => {
-        btn.addEventListener("mouseenter", () =>
-          btn.classList.add("ring-2", "ring-brand-500/40")
-        );
-        btn.addEventListener("mouseleave", () =>
-          btn.classList.remove("ring-2", "ring-brand-500/40")
-        );
-      });
-
-      const filterBtns = document.querySelectorAll(".filter-btn");
-
-      filterBtns.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          // reset semua tombol
-          filterBtns.forEach((b) =>
-            b.classList.remove("active", "bg-[#a97458]", "text-white")
-          );
-
-          // set tombol aktif
-          btn.classList.add("active", "bg-[#a97458]", "text-white");
-        });
-      });
-
-      var swiper = new Swiper(".mySwiper", {
-        slidesPerView: "auto",
-        centeredSlides: true, // mobile -> 1 card di tengah
-        spaceBetween: 16,
+      new Swiper(".mySwiper", {
+        slidesPerView: 1.5,
+        spaceBetween: 20,
         loop: true,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-        },
-        breakpoints: {
-          640: {
-            slidesPerView: 2,
-            centeredSlides: false,
-            slidesPerGroup: 2,
-          },
-          1024: {
-            slidesPerView: 3,
-            slidesPerGroup: 1, // geser langsung 3 card
-            centeredSlides: false,
-          },
-        },
+        autoplay: { delay: 3000, disableOnInteraction: false },
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         },
+        breakpoints: {
+          768: { slidesPerView: 3, spaceBetween: 30 },
+        },
       });
 
-      // Modal
-      const modal = document.getElementById("imageModal");
-      const modalImg = document.getElementById("modalImage");
+      // Swiper khusus kategori segiempat
+      document.addEventListener("DOMContentLoaded", () => {
+        const segiSwiper = new Swiper(".segiempat-swiper", {
+          slidesPerView: 1.1,
+          spaceBetween: 18,
+          loop: true,
+          grabCursor: true,
+          autoplay: { delay: 3000, disableOnInteraction: false },
+          breakpoints: {
+            640: { slidesPerView: 1.3 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          },
+        });
 
-      function openModal(src) {
-        modal.classList.remove("hidden");
-        modal.classList.add("flex");
-        modalImg.src = src;
+        document
+          .querySelectorAll(".segi-next")
+          .forEach((btn) =>
+            btn.addEventListener("click", () => segiSwiper.slideNext())
+          );
+        document
+          .querySelectorAll(".segi-prev")
+          .forEach((btn) =>
+            btn.addEventListener("click", () => segiSwiper.slidePrev())
+          );
+      });
+
+      /* ===============================
+   6) FILTER KATEGORI + LOAD MORE
+================================*/
+
+      const btns = document.querySelectorAll(".filter-btn");
+      const cards = document.querySelectorAll("#gridKategori [data-category]");
+
+      let currentFilter = "all";
+      let itemsPerPage = 6;
+      let currentCount = itemsPerPage;
+      const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+      function applyFilter() {
+        let visible = [];
+
+        cards.forEach((card) => {
+          const match =
+            currentFilter === "all" || card.dataset.category === currentFilter;
+          card.style.display = "none";
+          if (match) visible.push(card);
+        });
+
+        visible.forEach((item, i) => {
+          if (i < currentCount) item.style.display = "block";
+        });
+
+        loadMoreBtn.style.display =
+          currentCount >= visible.length ? "none" : "block";
       }
 
-      function closeModal() {
-        modal.classList.add("hidden");
-        modal.classList.remove("flex");
-        modalImg.src = "";
-      }
+      btns.forEach((btn) =>
+        btn.addEventListener("click", () => {
+          btns.forEach((b) => b.classList.remove("bg-brand-600", "text-white"));
+          btn.classList.add("bg-brand-600", "text-white");
+          currentFilter = btn.dataset.filter;
+          currentCount = itemsPerPage;
+          applyFilter();
+        })
+      );
 
-      // Tutup modal saat klik di luar gambar
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-          closeModal();
-        }
+      loadMoreBtn?.addEventListener("click", () => {
+        currentCount += itemsPerPage;
+        applyFilter();
       });
 
-      // Tutup modal dengan tombol ESC
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          closeModal();
-        }
-      });
+      document.addEventListener("DOMContentLoaded", applyFilter);
+
+      /* ===============================
+   7) AUTOMATIC YEAR IN FOOTER
+================================*/
+      document.getElementById("year").textContent = new Date().getFullYear();
     </script>
   </body>
 </html>
